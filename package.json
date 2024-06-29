@@ -1,0 +1,27 @@
+{
+  "name": "library-2.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@nuxt/eslint": "^0.3.13",
+    "@nuxtjs/workbox": "^3.0.0-beta.16",
+    "idb": "^8.0.0",
+    "minisearch": "^6.3.0",
+    "nuxt": "^3.12.2",
+    "vue": "^3.4.31",
+    "vue-router": "^4.4.0"
+  },
+  "devDependencies": {
+    "@nuxtjs/i18n": "^8.3.1",
+    "@nuxtjs/tailwindcss": "^6.12.0",
+    "@vite-pwa/nuxt": "^0.8.1",
+    "less": "^4.2.0"
+  }
+}
