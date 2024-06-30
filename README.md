@@ -1,75 +1,41 @@
-# Nuxt 3 Minimal Starter
+# Library 2.0
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+## Najlepsza biblioteka stworzona dla ciebie
 
-## Setup
+### Dodaj swoje książki i stwórz swoją własną bibliotekę
 
-Make sure to install the dependencies:
+Dane o książkach pochodzą z [books.google](https://books.google.com) przez co wiele książek nie ma zdjęć albo opisu czasami również jej w ogóle nie ma :cry:
 
-```bash
-# npm
-npm install
+## Funkcje
 
-# pnpm
-pnpm install
+- [x] zmiana tła i koloru tekstu na żywo
+- [x] zmiana położenia powiadomień
+- [x] dodawanie książek
+- [x] usuwanie książek
+- [x] polubienie książek
+- [x] edytowanie książek
+- [x] wyszukiwanie książek
+- [x] wyszukiwanie książek tylko polubionych
+- [x] sortowanie książek
+- [ ] zmiana nazwy biblioteki na własną
+- [ ] dodawania pozycji książki np. na której półce
 
-# yarn
-yarn install
+## The best library created for you
 
-# bun
-bun install
-```
+### Add your books and create a your own library
 
-## Development Server
+Data about books comes from [books.google](https://books.google.com), which is why many books do not have photos or descriptions, sometimes there is no book at all :cry:
 
-Start the development server on `http://localhost:3000`:
+## Functions
 
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+- [x] live change text background and color
+- [x] change the position of notifications
+- [x] adding books
+- [x] removing books
+- [x] liking books
+- [x] book editing
+- [x] book search
+- [x] search for books only liked
+- [x] sorting books
+- [ ] change the library name to your own
+- [ ] adding a book position, e.g. on which shelf
