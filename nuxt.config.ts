@@ -1,8 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  // app: {
-  //   baseURL: '/library-2.0/',
-  // },
+  app: {
+    baseURL: '/library-2.0/',
+  },
   devtools: { enabled: true },
   ssr: false, // Keep this as false if you don't need server-side rendering
   modules: [
