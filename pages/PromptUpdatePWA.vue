@@ -6,7 +6,7 @@
     </span>
 
     <button @click="$pwa.updateServiceWorker()">
-      {{ $t('reload') }}
+      {{ $t('pwa_reload') }}
     </button>
   </div>
 </template>

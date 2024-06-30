@@ -12,7 +12,4 @@ useSeoMeta({
   description: 'Strona stworzona, abyś mógł stworzyć własną bibliotekę.',
   themeColor: '#000000',
 })
-useHead({
-  link: [{ rel: 'icon', type: 'image/svg+xml', href: '/favicon.ico' }],
-})
 </script>
