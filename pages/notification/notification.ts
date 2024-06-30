@@ -3,6 +3,7 @@ interface notificationData {
     info: {
       online: string
       offline: string
+      pwa_offlineReady: string
     }
     error: {
       add_book: string
@@ -23,6 +24,7 @@ export const notificationData: notificationData = {
       online: 'Jesteś online!',
       offline:
         'Jesteś offline! Ale spokojnie możesz dalej korzystać z aplikacji. :)',
+      pwa_offlineReady: 'Aplikacja gotowa do pracy w trybie offline.',
     },
     error: {
       add_book: 'Coś poszło nie tak przy dodawaniu książki/książek!',
@@ -41,6 +43,7 @@ export const notificationData: notificationData = {
     info: {
       online: 'You are online!',
       offline: 'You are offline!',
+      pwa_offlineReady: 'App ready to work offline.',
     },
     error: {
       add_book: 'Something went wrong while adding the book(s).',

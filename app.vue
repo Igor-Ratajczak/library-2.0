@@ -1,17 +1,18 @@
 <template>
-  <div>
-    <NuxtPage />
-  </div>
+  <NuxtPwaManifest />
+  <NuxtPage />
+  <PromptUpdatePWA />
 </template>
 
 <script setup lang="ts">
+import PromptUpdatePWA from './pages/PromptUpdatePWA.vue'
+
 useSeoMeta({
   title: 'Library 2.0',
   description: 'Strona stworzona, abyś mógł stworzyć własną bibliotekę.',
   themeColor: '#000000',
-  ogImage: './favicon.ico',
 })
 useHead({
-  link: [{ rel: 'icon', type: 'image/png', href: 'favicon.ico' }],
+  link: [{ rel: 'icon', type: 'image/svg+xml', href: '/favicon.ico' }],
 })
 </script>

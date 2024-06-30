@@ -1,7 +1,7 @@
 <template>
   <div class="navbar">
     <div class="name">
-      <img src="/icons/android-chrome-maskable-192x192.png">
+      <img src="/icons/favicon-32x32.png">
       <h1
         v-if="!isMobile"
         class="text-4xl"

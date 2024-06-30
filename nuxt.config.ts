@@ -1,8 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  app: {
-    baseURL: '/library-2.0/',
-  },
+  // app: {
+  //   baseURL: '/library-2.0/',
+  // },
   devtools: { enabled: true },
   ssr: false, // Keep this as false if you don't need server-side rendering
   modules: [
@@ -23,7 +23,8 @@ export default defineNuxtConfig({
       name: 'Library 2.0',
       short_name: 'Library 2.0',
       lang: 'pl',
-      start_url: '/library-2.0/',
+      id: '/',
+      start_url: '/',
       display: 'standalone',
       background_color: '#230b9d',
       theme_color: '#230b9d',
@@ -101,9 +102,9 @@ export default defineNuxtConfig({
           type: 'image/png',
         },
         {
-          src: '/icons/safari-pinned-tab.png',
+          src: '/icons/safari-pinned-tab.svg',
           sizes: '32x32',
-          type: 'image/png',
+          type: 'image/svg',
         },
       ],
     },

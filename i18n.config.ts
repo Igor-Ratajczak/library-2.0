@@ -28,9 +28,9 @@ export default defineI18nConfig(() => ({
       type_popularScientific: 'popularno-naukowe',
       type_adventure: 'przygodowe',
       type_youth_literature: 'literatura młodzieżowa',
-      pwa_offlineReady: 'Aplikacja gotowa do pracy w trybie offline.',
       pwa_needRefresh:
         'Dostępna jest nowa zawartość. Kliknij przycisk ponownego ładowania, aby zaktualizować.',
+      pwa_reload: 'Odśwież',
     },
     en: {
       name: 'Library 2.0',
@@ -57,9 +57,9 @@ export default defineI18nConfig(() => ({
       type_popularScientific: 'popular-science',
       type_adventure: 'adventure',
       type_youth_literature: 'youth literature',
-      pwa_offlineReady: 'App ready to work offline.',
       pwa_needRefresh:
         'New content available, click on reload button to update.',
+      pwa_reload: 'Reload',
     },
   },
 }))
