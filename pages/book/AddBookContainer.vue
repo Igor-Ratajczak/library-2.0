@@ -120,11 +120,15 @@ export default defineComponent({
       books.value.forEach(async (item) => {
         const libraryDB = new LibraryDatabase()
         const filterBooks = await libraryDB.filterIDB('book_id', item.id)
+        console.log(filterBooks);
+        
         bookStatus[item.id] = filterBooks.length > 0
       })
     }
 
     const isInDB = (id: string) => {
+      // console.log(id, bookStatus)
+
       return bookStatus[id] || false
     }
 

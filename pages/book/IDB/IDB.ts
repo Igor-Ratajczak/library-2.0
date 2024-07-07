@@ -26,7 +26,7 @@ export class LibraryDatabase {
   constructor() {
     this.dbPromise = openDB<LibraryDB>('Library', 1, {
       upgrade(db) {
-        db.createObjectStore('Books', { keyPath: 'book_id' })
+        db.createObjectStore('Books', { keyPath: 'id', autoIncrement: true })
       },
     })
   }
@@ -68,12 +68,14 @@ export class LibraryDatabase {
    * @param value Filter value.
    * @returns Promise with an array of books that fit the filter.
    */
-  public async filterIDB(type: keyof Book, value: string): Promise<Book[]> {
+  public async filterIDB(type: keyof Book, value: string): Promise<boolean[]> {
     const db = await this.dbPromise
     const books = await db.getAll('Books')
-    return books.filter((book: Book) => {
-      book[type] === value
+    const returnedValue: Array<boolean> = []
+    books.filter((book: Book) => {
+      if (book[type] === value) returnedValue.push(true)
     })
+    return returnedValue
   }
 
   /**
