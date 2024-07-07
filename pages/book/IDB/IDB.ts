@@ -48,7 +48,16 @@ export class LibraryDatabase {
     const db = await this.dbPromise
     const tx = db.transaction('Books', 'readwrite')
     for (const book of data) {
-      await tx.store.put(book)
+      await tx.store.put({
+        author: book.author,
+        book_id: book.book_id,
+        title: book.title,
+        publisher: book.publisher,
+        publishedDate: book.publishedDate,
+        description: book.description,
+        image: book.image,
+        favorite: false,
+      })
     }
     await tx.done
   }
@@ -62,7 +71,9 @@ export class LibraryDatabase {
   public async filterIDB(type: keyof Book, value: string): Promise<Book[]> {
     const db = await this.dbPromise
     const books = await db.getAll('Books')
-    return books.filter(book => book[type] === value)
+    return books.filter((book: Book) => {
+      book[type] === value
+    })
   }
 
   /**
