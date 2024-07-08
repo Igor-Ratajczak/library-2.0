@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   app: {
-    // baseURL: '/library-2.0/',
+    baseURL: '/library-2.0/',
     head: {
       link: [{ rel: 'icon', type: 'image/ico', href: './icons/favicon.ico' }],
     },
