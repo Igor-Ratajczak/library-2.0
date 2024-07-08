@@ -85,7 +85,7 @@
         </div>
         <div
           class="edit"
-          @click=";(isEditing = true), edit_book.push(item)"
+          @click="changeEditing(item)"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -172,7 +172,7 @@ export default defineComponent({
     EditBookContainer,
   },
   setup() {
-    let isEditing = false
+    let isEditing = ref(false)
     const edit_book: Ref<Book[]> = ref([])
     const books: Ref<Book[]> = ref([])
     const buttonPages: Ref<Array<number | string>> = ref([])
@@ -295,11 +295,16 @@ export default defineComponent({
       // * clear the edit_book value
       edit_book.value = []
       // * change isEditing to false
-      isEditing = false
+      isEditing.value = false
       // * update the book data in the library database
       editBook(payload.data)
     }
-
+    const changeEditing = (item: Book ) => {
+      isEditing.value = true
+      edit_book.value.push(item)
+      console.log(edit_book.value);
+      
+    }
     // ! watch for set current sort option
     watch(currentSort, (newVal) => {
       if (newVal) {
@@ -347,6 +352,7 @@ export default defineComponent({
       handleSave,
       loadBooks,
       search,
+      changeEditing,
       show: ref(false),
     }
   },
