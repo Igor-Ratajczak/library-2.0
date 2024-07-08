@@ -8,12 +8,7 @@ export default defineNuxtConfig({
   },
   devtools: { enabled: true },
   ssr: false, // Keep this as false if you don't need server-side rendering
-  modules: [
-    '@nuxt/eslint',
-    '@nuxtjs/tailwindcss',
-    '@nuxtjs/i18n',
-    '@vite-pwa/nuxt',
-  ],
+  modules: ['@nuxtjs/tailwindcss', '@nuxtjs/i18n', '@vite-pwa/nuxt'],
   eslint: {
     config: {
       stylistic: true,

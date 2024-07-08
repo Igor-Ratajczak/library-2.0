@@ -110,7 +110,7 @@
       </div>
       <img
         :src="(item.image as string) === '' ? '/icons/no-image.png' : (item.image as string)"
-        :style="{ width: item.image as string === '' ? 'fit-content' :null, height: item.image as string === '' ? 'fit-content' :null }"
+        :style="{ width: item.image === '' ? 'fit-content' : '', height: item.image === '' ? 'fit-content' : '' }"
         alt="book"
       >
       <Transition>

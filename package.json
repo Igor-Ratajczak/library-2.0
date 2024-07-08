@@ -10,7 +10,6 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@nuxt/eslint": "^0.3.13",
     "@nuxtjs/workbox": "^3.0.0-beta.16",
     "idb": "^8.0.0",
     "minisearch": "^6.3.0",
