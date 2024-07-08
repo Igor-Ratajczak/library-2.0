@@ -26,69 +26,63 @@
       type="search"
       :placeholder="$t('search_book')"
       @input="setSearch(text)"
-    >
+    />
     <Transition>
-      <div
-        v-if="isMobile && showSearchBar"
-        class="search__bar"
-      >
-        <input
-          type="search"
-          :placeholder="$t('search_book')"
-        >
-        <button
-          class="close"
-          @click="showSearchBar = false"
-        >
-          X
-        </button>
+      <div v-if="isMobile && showSearchBar" class="search__bar">
+        <input type="search" :placeholder="$t('search_book')" />
+        <button class="close" @click="showSearchBar = false">X</button>
       </div>
     </Transition>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watchEffect } from 'vue'
+  import { defineComponent, ref, watchEffect } from 'vue'
 
-export default defineComponent({
-  setup() {
-    const { searchText } = useGlobalState()
-    const text = searchText.value === 'all_favorite__book' ? '' : searchText.value === ' ' ? '' : searchText.value
+  export default defineComponent({
+    setup() {
+      const { searchText } = useGlobalState()
+      const text =
+        searchText.value === 'all_favorite__book'
+          ? ''
+          : searchText.value === ' '
+          ? ''
+          : searchText.value
 
-    const setSearch = (text: string) => {
-      // * Implement set search text logic here. For simplicity, just updating the state.
-      searchText.value = text
-    }
-    return {
-      text,
-      setSearch,
-    }
-  },
-  data() {
-    const width = ref(window.innerWidth)
-    const height = ref(window.innerHeight)
-    const isMobile = ref(width.value < height.value ? true : false)
-    const showSearchBar = ref(false)
+      const setSearch = (text: string) => {
+        // * Implement set search text logic here. For simplicity, just updating the state.
+        searchText.value = text
+      }
+      return {
+        text,
+        setSearch,
+      }
+    },
+    data() {
+      const width = ref(window.innerWidth)
+      const height = ref(window.innerHeight)
+      const isMobile = ref(width.value < height.value ? true : false)
+      const showSearchBar = ref(false)
 
-    const updateDimensions = () => {
-      width.value = window.innerWidth
-      height.value = window.innerHeight
-    }
+      const updateDimensions = () => {
+        width.value = window.innerWidth
+        height.value = window.innerHeight
+      }
 
-    window.addEventListener('resize', updateDimensions)
+      window.addEventListener('resize', updateDimensions)
 
-    watchEffect(() => {
-      isMobile.value = width.value < height.value
-    })
+      watchEffect(() => {
+        isMobile.value = width.value < height.value
+      })
 
-    return {
-      width,
-      height,
-      isMobile,
-      showSearchBar,
-    }
-  },
-})
+      return {
+        width,
+        height,
+        isMobile,
+        showSearchBar,
+      }
+    },
+  })
 </script>
 
 <style lang="less">
@@ -105,9 +99,8 @@ export default defineComponent({
     display: grid;
     grid-column: 2/3;
     grid-row: 1/2;
-    input{
-    place-self: center;
-
+    input {
+      place-self: center;
     }
   }
   .search-button {
@@ -124,7 +117,7 @@ export default defineComponent({
       grid-column: 2/3;
     }
   }
-  input[type="search"] {
+  input[type='search'] {
     box-shadow: 0 0 30px 5px currentColor;
   }
   input::placeholder {

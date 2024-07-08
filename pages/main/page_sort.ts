@@ -13,21 +13,24 @@ export class page_sort {
    * @param sort - The current sort option.
    * @param search - The current search text.
    */
-  public updateURL(page: string, sort: string, search: string, favorite: string): void {
+  public updateURL(
+    page: string,
+    sort: string,
+    search: string,
+    favorite: string
+  ): void {
     const urlParams = new URLSearchParams(window.location.search) // Create a new URLSearchParams object using the current URL's search parameters
     urlParams.set('page', page) // Set the 'page' parameter to the provided page value
     urlParams.set('sort', sort) // Set the 'sort' parameter to the provided sort value
     if (favorite === 'favorite') {
       urlParams.set('type', 'favorite') // Set the 'favorite' parameter to the true
       urlParams.delete('search') // Delete the 'search' parameter if it is "all_favorite__book"
-    }
-    else {
+    } else {
       urlParams.delete('type') // Delete the 'favorite' parameter
     }
     if (search !== '') {
-      urlParams.set('search', search)// Set the 'search' parameter to the provided search text
-    }
-    else {
+      urlParams.set('search', search) // Set the 'search' parameter to the provided search text
+    } else {
       urlParams.delete('search') // Delete the 'search' parameter if it is empty
     }
     const newUrl = `${window.location.pathname}?${urlParams.toString()}` // Construct a new URL by combining the pathname of the current URL with the search parameters as a query string
@@ -62,24 +65,19 @@ export class page_sort {
         break
       case 'newest':
         // Sort books by published date in newest order
-        allBooks.sort(
-          (a, b) => {
-            const _a = Number(a.publishedDate.substring(0, 4))
-            const _b = Number(b.publishedDate.substring(0, 4))
-            return Number(_b - _a)
-          },
-
-        )
+        allBooks.sort((a, b) => {
+          const _a = Number(a.publishedDate.substring(0, 4))
+          const _b = Number(b.publishedDate.substring(0, 4))
+          return Number(_b - _a)
+        })
         break
       case 'older':
         // Sort books by published date in older order
-        allBooks.sort(
-          (a, b) => {
-            const _a = Number(a.publishedDate.substring(0, 4))
-            const _b = Number(b.publishedDate.substring(0, 4))
-            return _a - _b
-          },
-        )
+        allBooks.sort((a, b) => {
+          const _a = Number(a.publishedDate.substring(0, 4))
+          const _b = Number(b.publishedDate.substring(0, 4))
+          return _a - _b
+        })
         break
       default:
         break
@@ -121,7 +119,7 @@ export class page_sort {
             totalPages - 3,
             totalPages - 2,
             totalPages - 1,
-            totalPages,
+            totalPages
           )
           break
         case n:
@@ -135,14 +133,13 @@ export class page_sort {
             n + 1,
             n + 2,
             '...',
-            totalPages,
+            totalPages
           )
           break
         default:
           break
       }
-    }
-    else {
+    } else {
       // If the total number of pages is less than or equal to 5, display all the page numbers
       for (let index = 0; index < totalPages; index++) {
         data.value.push(index + 1)
@@ -154,12 +151,20 @@ export class page_sort {
   public searchBook(allBooks: Book[], value: string) {
     if (value === 'all_favorite__book') {
       return (allBooks as Book[]).filter((book: Book) => book.favorite)
-    }
-    else {
+    } else {
       const data: Book[] = []
       const miniSearch = new MiniSearch({
         fields: ['title', 'author', 'description'], // fields to index for full-text search
-        storeFields: ['book_id', 'title', 'author', 'description', 'publisher', 'publishedDate', 'image', 'favorite'], // fields to return with search results
+        storeFields: [
+          'book_id',
+          'title',
+          'author',
+          'description',
+          'publisher',
+          'publishedDate',
+          'image',
+          'favorite',
+        ], // fields to return with search results
       })
 
       miniSearch.addAll(allBooks)

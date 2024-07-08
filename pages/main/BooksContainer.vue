@@ -1,13 +1,6 @@
 <template>
-  <div
-    v-if="books.length !== 0"
-    class="books_container"
-  >
-    <div
-      v-for="item in books"
-      :key="item.book_id"
-      class="book"
-    >
+  <div v-if="books.length !== 0" class="books_container">
+    <div v-for="item in books" :key="item.book_id" class="book">
       <h2>{{ item.title }}</h2>
       <h3>{{ item.author }}</h3>
       <div class="option_book">
@@ -16,11 +9,7 @@
           :class="item.favorite === true ? 'active' : null"
           @click="setFavoriteBook(item)"
         >
-          <svg
-            width="25"
-            height="25"
-            viewBox="0 0 300 300"
-          >
+          <svg width="25" height="25" viewBox="0 0 300 300">
             <path
               fill="currentcolor"
               d="M0 200 v-200 h200
@@ -30,15 +19,8 @@
             />
           </svg>
         </div>
-        <div
-          class="remove"
-          @click="removeBook(item)"
-        >
-          <svg
-            width="40"
-            height="40"
-            viewBox="0 0 60 70"
-          >
+        <div class="remove" @click="removeBook(item)">
+          <svg width="40" height="40" viewBox="0 0 60 70">
             <rect
               x="10"
               y="10"
@@ -83,10 +65,7 @@
             />
           </svg>
         </div>
-        <div
-          class="edit"
-          @click="changeEditing(item)"
-        >
+        <div class="edit" @click="changeEditing(item)">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             x="0px"
@@ -101,23 +80,20 @@
             />
           </svg>
         </div>
-        <button
-          type="button"
-          @click="show = !show"
-        >
+        <button type="button" @click="show = !show">
           {{ $t('show_more') }}
         </button>
       </div>
       <img
-        :src="(item.image as string) === '' ? '/icons/no-image.png' : (item.image as string)"
-        :style="{ width: item.image === '' ? 'fit-content' : '', height: item.image === '' ? 'fit-content' : '' }"
+        :src="(item.image as string) === '' ? noImage : (item.image as string)"
+        :style="{
+          width: item.image === '' ? 'fit-content' : '',
+          height: item.image === '' ? 'fit-content' : '',
+        }"
         alt="book"
-      >
+      />
       <Transition>
-        <div
-          v-if="show"
-          class="more_data"
-        >
+        <div v-if="show" class="more_data">
           <div class="published">
             <b>{{ item.publisher }}</b>
             <p>{{ item.publishedDate }}</p>
@@ -150,213 +126,202 @@
       </div>
     </Teleport>
   </div>
-  <div
-    v-else
-    class="no_book"
-  >
+  <div v-else class="no_book">
     {{ $t('no_book') }}
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import { LibraryDatabase, type Book } from '../book/IDB/IDB'
-import { Notification, notificationData } from '../notification/notification'
-import EditBookContainer from './EditBookContainer.vue'
-import { page_sort } from './page_sort'
-import { useGlobalState } from '~/composables/state'
+  import { defineComponent } from 'vue'
+  import { LibraryDatabase, type Book } from '../book/IDB/IDB'
+  import { Notification, notificationData } from '../notification/notification'
+  import EditBookContainer from './EditBookContainer.vue'
+  import { page_sort } from './page_sort'
+  import { useGlobalState } from '~/composables/state'
+  import noImage from '/public/icons/no-image.png'
 
-export default defineComponent({
-  name: 'BooksContainer',
-  components: {
-    EditBookContainer,
-  },
-  setup() {
-    let isEditing = ref(false)
-    const edit_book: Ref<Book[]> = ref([])
-    const books: Ref<Book[]> = ref([])
-    const buttonPages: Ref<Array<number | string>> = ref([])
-    const { currentPage, currentSort, addingBook, searchText, favorite }
-        = useGlobalState()
-    const { NumberPages, SortBooks, updateURL, searchBook } = new page_sort()
+  export default defineComponent({
+    name: 'BooksContainer',
+    components: {
+      EditBookContainer,
+    },
+    setup() {
+      let isEditing = ref(false)
+      const edit_book: Ref<Book[]> = ref([])
+      const books: Ref<Book[]> = ref([])
+      const buttonPages: Ref<Array<number | string>> = ref([])
+      const { currentPage, currentSort, addingBook, searchText, favorite } =
+        useGlobalState()
+      const { NumberPages, SortBooks, updateURL, searchBook } = new page_sort()
 
-    const loadBooks = async (n: number) => {
-      const libraryDB = new LibraryDatabase()
-      try {
-        // * Load the all books from the library database
-        const allBooks: Book[] = await libraryDB.getAllBooks()
-        // ! filter book on the current site
-        const startIndex = (n - 1) * 10 // * start of book index
-        const endIndex = n * 10 // * end of book index
-        let data: Book[]
-        let newListBooks: Book[]
-        if (favorite.value === 'favorite') {
-          data = allBooks.filter((book: Book) => book.favorite)
-          if (searchText.value === '') {
-            newListBooks = data
+      const loadBooks = async (n: number) => {
+        const libraryDB = new LibraryDatabase()
+        try {
+          // * Load the all books from the library database
+          const allBooks: Book[] = await libraryDB.getAllBooks()
+          // ! filter book on the current site
+          const startIndex = (n - 1) * 10 // * start of book index
+          const endIndex = n * 10 // * end of book index
+          let data: Book[]
+          let newListBooks: Book[]
+          if (favorite.value === 'favorite') {
+            data = allBooks.filter((book: Book) => book.favorite)
+            if (searchText.value === '') {
+              newListBooks = data
+            } else {
+              newListBooks = searchBook(data, searchText.value)
+              currentPage.value = n
+            }
+          } else {
+            data = allBooks
+            if (searchText.value === '') {
+              newListBooks = data
+            } else {
+              newListBooks = searchBook(data, searchText.value)
+              currentPage.value = n
+            }
           }
-          else {
-            newListBooks = searchBook(data, searchText.value)
-            currentPage.value = n
-          }
-        }
-        else {
-          data = allBooks
-          if (searchText.value === '') {
-            newListBooks = data
-          }
-          else {
-            newListBooks = searchBook(data, searchText.value)
-            currentPage.value = n
-          }
-        }
 
-        // ! Calculate the total number of pages
-        buttonPages.value = NumberPages(newListBooks, n).value
-        // * Sort the books array based on the current sort option
-        const sortingBooks = SortBooks(
-          newListBooks,
-          String(currentSort.value),
-        )
-        // * Update the URL with the current page and sort option
-        if (currentPage.value > Number(buttonPages.value)) {
-          updateURL(
-            String(1),
-            currentSort.value,
-            searchText.value,
-            favorite.value,
+          // ! Calculate the total number of pages
+          buttonPages.value = NumberPages(newListBooks, n).value
+          // * Sort the books array based on the current sort option
+          const sortingBooks = SortBooks(
+            newListBooks,
+            String(currentSort.value)
           )
-          currentPage.value = 1
-        }
-        else
-          updateURL(
-            String(currentPage.value),
-            currentSort.value,
-            searchText.value,
-            favorite.value,
-          )
+          // * Update the URL with the current page and sort option
+          if (currentPage.value > Number(buttonPages.value)) {
+            updateURL(
+              String(1),
+              currentSort.value,
+              searchText.value,
+              favorite.value
+            )
+            currentPage.value = 1
+          } else
+            updateURL(
+              String(currentPage.value),
+              currentSort.value,
+              searchText.value,
+              favorite.value
+            )
           // * Populate the books array
-        books.value = sortingBooks.slice(startIndex, endIndex)
+          books.value = sortingBooks.slice(startIndex, endIndex)
+        } catch (error) {
+          Notification(
+            'error',
+            notificationData[window.user_settings.language].error.load_book
+          )
+        }
       }
-      catch (error) {
-        Notification(
-          'error',
-          notificationData[window.user_settings.language].error.load_book,
-        )
+      const setFavoriteBook = async (book: Book) => {
+        const libraryDB = new LibraryDatabase()
+        try {
+          await libraryDB.favoriteBook(book)
+          loadBooks(currentPage.value)
+        } catch (error) {
+          Notification(
+            'error',
+            notificationData[window.user_settings.language].error.edit_book
+          )
+        }
       }
-    }
-    const setFavoriteBook = async (book: Book) => {
-      const libraryDB = new LibraryDatabase()
-      try {
-        await libraryDB.favoriteBook(book)
+
+      const removeBook = async (book: Book) => {
+        const libraryDB = new LibraryDatabase()
+        try {
+          await libraryDB.removeBook(book)
+          loadBooks(currentPage.value)
+        } catch (error) {
+          Notification(
+            'error',
+            notificationData[window.user_settings.language].error.remove_book
+          )
+        }
+      }
+      const editBook = async (book: Book) => {
+        const libraryDB = new LibraryDatabase()
+        try {
+          await libraryDB.editBook(book)
+          loadBooks(currentPage.value)
+        } catch (error) {
+          Notification(
+            'error',
+            notificationData[window.user_settings.language].error.edit_book
+          )
+        }
+      }
+      const search = (allBooks: Book[], type: string) => {
+        // * Search for book in the library database
+        books.value = searchBook(allBooks, type)
+      }
+
+      // ! save data of book to database after editing
+      const handleSave = (payload: { data: Book }) => {
+        // * clear the edit_book value
+        edit_book.value = []
+        // * change isEditing to false
+        isEditing.value = false
+        // * update the book data in the library database
+        editBook(payload.data)
+      }
+      const changeEditing = (item: Book) => {
+        isEditing.value = true
+        edit_book.value.push(item)
+      }
+      // ! watch for set current sort option
+      watch(currentSort, (newVal) => {
+        if (newVal) {
+          loadBooks(currentPage.value)
+        }
+      })
+
+      // ! watch for set current page number
+      watch(currentPage, (newVal) => {
+        if (newVal) {
+          loadBooks(newVal)
+        }
+      })
+
+      // ! watch for run loadBooks function after adding book
+      watch(addingBook, (newVal) => {
+        if (newVal === true) {
+          loadBooks(currentPage.value)
+        }
+      })
+
+      // ! watch for run loadBooks function after input text to search
+      watch(searchText, () => {
+        loadBooks(1)
+      })
+
+      // ! watch for run loadBooks function after toggle favorite
+      watch(favorite, () => {
+        loadBooks(1)
+      })
+      onMounted(() => {
         loadBooks(currentPage.value)
-      }
-      catch (error) {
-        Notification(
-          'error',
-          notificationData[window.user_settings.language].error.edit_book,
-        )
-      }
-    }
+      })
 
-    const removeBook = async (book: Book) => {
-      const libraryDB = new LibraryDatabase()
-      try {
-        await libraryDB.removeBook(book)
-        loadBooks(currentPage.value)
+      return {
+        isEditing,
+        edit_book,
+        books,
+        buttonPages,
+        currentPage,
+        currentSort,
+        setFavoriteBook,
+        removeBook,
+        editBook,
+        handleSave,
+        loadBooks,
+        search,
+        changeEditing,
+        show: ref(false),
+        noImage,
       }
-      catch (error) {
-        Notification(
-          'error',
-          notificationData[window.user_settings.language].error.remove_book,
-        )
-      }
-    }
-    const editBook = async (book: Book) => {
-      const libraryDB = new LibraryDatabase()
-      try {
-        await libraryDB.editBook(book)
-        loadBooks(currentPage.value)
-      }
-      catch (error) {
-        Notification(
-          'error',
-          notificationData[window.user_settings.language].error.edit_book,
-        )
-      }
-    }
-    const search = (allBooks: Book[], type: string) => {
-      // * Search for book in the library database
-      books.value = searchBook(allBooks, type)
-    }
-
-    // ! save data of book to database after editing
-    const handleSave = (payload: { data: Book }) => {
-      // * clear the edit_book value
-      edit_book.value = []
-      // * change isEditing to false
-      isEditing.value = false
-      // * update the book data in the library database
-      editBook(payload.data)
-    }
-    const changeEditing = (item: Book ) => {
-      isEditing.value = true
-      edit_book.value.push(item)
-      console.log(edit_book.value);
-      
-    }
-    // ! watch for set current sort option
-    watch(currentSort, (newVal) => {
-      if (newVal) {
-        loadBooks(currentPage.value)
-      }
-    })
-
-    // ! watch for set current page number
-    watch(currentPage, (newVal) => {
-      if (newVal) {
-        loadBooks(newVal)
-      }
-    })
-
-    // ! watch for run loadBooks function after adding book
-    watch(addingBook, (newVal) => {
-      if (newVal === true) {
-        loadBooks(currentPage.value)
-      }
-    })
-
-    // ! watch for run loadBooks function after input text to search
-    watch(searchText, () => {
-      loadBooks(1)
-    })
-
-    // ! watch for run loadBooks function after toggle favorite
-    watch(favorite, () => {
-      loadBooks(1)
-    })
-    onMounted(() => {
-      loadBooks(currentPage.value)
-    })
-
-    return {
-      isEditing,
-      edit_book,
-      books,
-      buttonPages,
-      currentPage,
-      currentSort,
-      setFavoriteBook,
-      removeBook,
-      editBook,
-      handleSave,
-      loadBooks,
-      search,
-      changeEditing,
-      show: ref(false),
-    }
-  },
-})
+    },
+  })
 </script>
 
 <style lang="less">
@@ -432,7 +397,7 @@ export default defineComponent({
       .more_data {
         grid-column: 1;
         grid-row: 1 / 5;
-        width:50%;
+        width: 50%;
         height: 100%;
         left: 0;
         background: #00000099;
