@@ -32,7 +32,6 @@ export default defineComponent({
   methods: {
     toggleLanguage(lang: string) {
       this.language = lang
-      localStorage.setItem('lang', lang)
       this.$i18n.locale = lang
     },
   },

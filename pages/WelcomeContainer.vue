@@ -39,7 +39,7 @@ export default defineComponent({
     }
   },
   mounted() {
-    localStorage.setItem('welcome', 'false')
+    localStorage.setItem('library-2.0-welcome', 'false')
   },
   methods: {
     Notification,

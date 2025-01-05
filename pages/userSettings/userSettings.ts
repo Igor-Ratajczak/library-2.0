@@ -14,7 +14,7 @@ declare global {
   }
 }
 // get user settings from local storage
-const settingsLocalStorage: UserSettings = JSON.parse(localStorage.getItem('settings') as string)
+const settingsLocalStorage: UserSettings = JSON.parse(localStorage.getItem('library-2.0-settings') as string)
 
 // set user settings
 const default_user_settings: UserSettings = {
@@ -43,5 +43,5 @@ export function SetUserSettings(): void {
     window.user_settings.textColor,
   )
   // Set settings to local storage
-  localStorage.setItem('settings', JSON.stringify(window.user_settings))
+  localStorage.setItem('library-2.0-settings', JSON.stringify(window.user_settings))
 }

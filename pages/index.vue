@@ -41,7 +41,7 @@ export default defineComponent({
   },
   setup() {
     const { locale } = useI18n()
-    const showWelcome = ref(localStorage.getItem('welcome') ? false : true)
+    const showWelcome = ref(!localStorage.getItem('library-2.0-welcome'))
     onMounted(() => {
       checkConnection()
       SetUserSettings()
